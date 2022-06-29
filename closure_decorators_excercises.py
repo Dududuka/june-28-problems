@@ -25,7 +25,17 @@ print(*m7_under30)
 def hello_world():
     return 'hello young, good day!!'
 
+def make_upper(func):
+    def wrapper(*args, **kwargs):
+        print(func(*args, **kwargs).upper())
+    return wrapper
+
+def hello_world():
+    return 'hello young, good day!!'
+
 print(hello_world()) # output: HELLO YOUNG, GOOD DAY!!
+upper = make_upper(hello_world)
+upper()
 #-----------------------------------------------------------------------
 
 #Decorators Excercise 2
@@ -35,17 +45,35 @@ print(hello_world()) # output: HELLO YOUNG, GOOD DAY!!
 def my_func():
     print('Python is fun!!')
 
+def print_func_name(my_func):
+    def wrapper():
+        print("my_func is running...")
+        my_func()
+    return wrapper
+
+def my_func():
+    print('Python is fun!!')
+
 my_func() # output: my_func is running...
             #Python is fun
+func = print_func_name(my_func)
+func()
 #----------------------------------------------------------------------
 
 #Decoratos Excercise 3
 #@give_name(name) – concatenate the given name at the end of a string
 #returned from the decorated function.
+def my_dec(func):
+    def wrapper(name):
+        print(func(), name)
+    return wrapper
+    
 def greeting():
     return 'Hello'
 
-print(greeting()) # output: Hello Theresa
+greeting = my_dec(greeting) 
+greeting("Theresa") # output: Hello Theresa
+
 #---------------------------------------------------------------------
 
 #Decorators Excercise 4
