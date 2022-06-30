@@ -4,6 +4,15 @@
 #Using a closure, create a function, multiples_of(n) which we can use to
 #create generators that generate multiples of n less than a given number.
 
+def multiples_of(n):
+    num = []
+    def get_multiples(k):
+        for i in range(1, k):
+            if i%n == 0:
+                num.append(i)
+        yield str(num)
+    return get_multiples
+
 m3 = multiples_of(3)
 m3_under30 = m3(30)
 m7_under30 = multiples_of(7)(30)
@@ -109,7 +118,14 @@ print(square(2.9)) # output: The return type is <class 'float'>
 #------------------------------------------------------------------------
 
 #Decorators Excercise 6
-#@execute_log – write a function execution log on the log file. (log below)
+#@execute_log – write a function executing log on the log file. (log below)
+from datetime import datetime
+#print(datetime.now())
+
+def execute_log(func):
+    def inner():
+        print(datetime.now(), func.__name__)
+    return inner 
 
 def multiply(*nums):
     mult = 1
@@ -125,9 +141,18 @@ print(hello_world()) # hello world!!
 print(multiply(2.2, 4)) # 8.8
 print(hello_world()) # hello world!!
 
+function_execution = execute_log(multiply)
+function_execution()
+function_execution = execute_log(hello_world)
+function_execution()
+function_execution = execute_log(multiply)
+function_execution()
+function_execution = execute_log(hello_world)
+function_execution()
+
 
 #function_execution.log
 #2020-05-01 13:55:53.059315 multiply
 #2020-05-01 13:55:53.060312 hello_world
 #2020-05-01 13:55:53.060314 multiply
-#2020-05-01 13:55:53.060323 hello_world
+#2020-05-01 13:55:53.060323 hello_world 
